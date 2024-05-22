@@ -15,17 +15,18 @@
 
 // 动态规划应该行
 // 末状态 dp[len-1]
-// 没考虑当前能走多远 dp设为剩余最大步数而非能否走到
+// dp设为剩余最大步数
 // 初状态 dp[0] = nums[0] dp[1] = max(dp[0] - 1, nums[1])
 // dp[i] = max(dp[i-1]-1,nums[i])
+// 判断条件为 dp除了最后一项 不能出现0 因此不给最后一项赋值即可
 export const canJump = (nums: number[]): boolean => {
   const len = nums.length;
   if (len < 2)
     return true;
   const dp = new Array(len);
   dp[0] = nums[0];
-  for (let i = 1; i < len; i++) {
+  for (let i = 1; i < len - 1; i++) {
     dp[i] = Math.max(dp[i - 1] - 1, nums[i]);
   }
-  return dp[len - 2] > 0;
+  return !dp.includes(0);
 };
